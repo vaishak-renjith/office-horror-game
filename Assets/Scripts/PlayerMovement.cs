@@ -9,19 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float interactDistance;
     public Vector2 playerInput;
-    public Vector2 interactVector;
+    public Vector2 interactDirection = Vector2.right;
     public LayerMask interactable;
-
-    void Awake()
-    {
-        interactVector = new Vector2(interactDistance, 0);
-    }
 
     void Update()
     {
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         if (playerInput != new Vector2(0, 0))
-            interactVector = playerInput;
+            interactDirection = playerInput;
         rb = GetComponent<Rigidbody2D>();
         if (Input.GetKey(KeyCode.Space)) {
             interact();
@@ -36,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     void interact()
     {
-        Debug.DrawRay(transform.position, interactVector, Color.green);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, interactVector, interactDistance, interactable);
+        Debug.DrawRay(transform.position, interactDirection, Color.green);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, interactDirection, interactDistance, interactable);
         if (hit.collider != null) {
             Debug.Log(hit.collider.gameObject.name);
             hit.collider.GetComponent<Job>().loadJob();
