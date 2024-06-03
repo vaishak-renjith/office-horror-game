@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(transform.position, interactDirection, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, interactDirection, interactDistance, interactable);
         if (hit.collider != null) {
-            Debug.Log(hit.collider.gameObject.name)
+            Debug.Log(hit.collider.gameObject.name);
             hit.collider.GetComponent<Job>().loadJob();
         }
     }
